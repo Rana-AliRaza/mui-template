@@ -1,34 +1,52 @@
-import React,{useState} from 'react';
-
-import { ThemeProvider } from '@emotion/react';
-import {   Box , Stack, createTheme} from '@mui/material';
-import Rightbar from './component/Rightbar';
-import Sidebar from './component/Sidebar';
-import Navbar from './component/Navbar';
-import Feeds from './component/Feeds';
-import Add from './component/Add';
+import React from 'react';
+import { Box, CssBaseline, Container } from '@mui/material';
+import Header from './component/Header.jsx';
+import OptionsTab from './component/OptionsTab.jsx';
+import LocationCards from './component/LocationCards.jsx';
+import Footer from './component/Footer.jsx';
+import MobileFooter from './component/MobileFooter.jsx';
+import FooterMenu from './component/FooterMenu.jsx';
 
 const App = () => {
-  const [ mode, setMode ] = useState("dark");
-  const darkTheme = createTheme({
-    palette:{
-      mode: mode,
-    },
-  })
-
   return (
-   <ThemeProvider theme={darkTheme} >
-     <Box bgcolor={"background.default"} color={"text.primary"}>
-      <Navbar />
-      <Stack direction="row" spacing={2} justifyContent="space-between"  >
-         <Sidebar  setMode={setMode} mode={mode}/>       
-         <Feeds />
-         <Rightbar />
-      </Stack>
-      <Add />
-     </Box>
-   </ThemeProvider>
+  <React.Fragment>
+    <CssBaseline />
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh'
+    }}>
+       <Box>
+        <Header />
+
+        <OptionsTab />
+       </Box>
+
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 100,
+          flexGrow: 1,
+          overflowY:'scroll',
+        }}>
+        <Container maxWidth="xl" sx={{ mb: 3  }}  >
+          <LocationCards />
+          <Box sx={{ display:{xs:'flex', md: 'none'} }}>
+            <MobileFooter />
+          </Box>
+        </Container>
+        </Box>
+
+        <Box  sx={{ display: { xs: 'flex', md: 'none' }  }}>
+          <FooterMenu />
+        </Box>
+
+        <Box sx={{ display:{ xs: 'none', md:'block'} }}>
+          <Footer />
+        </Box>
+
+    </Box>
+  </React.Fragment>
   )
 }
-
-export default App
+ export default App
